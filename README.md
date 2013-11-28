@@ -1,8 +1,10 @@
-# Dockerfile PostgreSQL
+# Dockerfile PgRest
 
 ## Info
 
-This Dockerfile creates a container running PostgreSQL 9.2.4.
+This Dockerfile creates a container running pgrest.
+
+https://github.com/clkao/pgrest
 
 Here's what it does in particular:
 
@@ -14,17 +16,6 @@ Here's what it does in particular:
 
 ## Install
 
-- `docker build -t "postgresql:9.2.4" .`
-- `docker run -d postgresql:9.2.4`
-
-
-## Persistance
-
-You can mount the database directory as a volume to persist your data:
-
-`docker run -d -v $HOME/.d_volumes/postgres/:/var/lib/postgresql postgresql:9.2.4`
-
-But before you can do so you first need to create the source folder: `mkdir -p $HOME/.d_volumes/postgres`
 
 
 ## Meta
