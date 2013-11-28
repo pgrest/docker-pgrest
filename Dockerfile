@@ -1,3 +1,4 @@
+# This image have preinstall npm, nodejs, ubuntu...
 FROM cmfatih/dun
 MAINTAINER chilijung<chilijung@gmail.com>
 
