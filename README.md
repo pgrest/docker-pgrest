@@ -21,3 +21,7 @@ Here's what it does in particular:
 ## Meta
 
 Build with docker version `0.5.1`
+
+## Reference
+
+https://wiki.postgresql.org/wiki/Apt

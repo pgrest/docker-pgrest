@@ -1,6 +1,6 @@
 # This image have preinstall npm, nodejs, ubuntu...
 FROM cmfatih/dun
-MAINTAINER chilijung<chilijung@gmail.com>
+MAINTAINER chilijung <chilijung@gmail.com>
 
 # Exposes
 EXPOSE 5432
@@ -9,28 +9,23 @@ EXPOSE 5432
 ENV USERNAME docker
 ENV PASS d0cker
 
-# update apt sources to use hetzner mirror
-#RUN echo "deb http://de.archive.ubuntu.com/ubuntu/ quantal main universe multiverse" > /etc/apt/sources.list
-RUN echo "deb ftp://mirror.hetzner.de/ubuntu/packages quantal main restricted universe multiverse" > /etc/apt/sources.list
+RUN apt-get install -y curl wget
+
+RUN touch /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
+
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 # Update the package repository
 RUN apt-get update
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl psmisc
+RUN apt-get install -y postgresql-9.3 postgresql-9.3-plv8 postgresql-server-dev-9.3
 
-# Install Dockyard
-RUN curl -o /usr/local/bin/dockyard https://raw.github.com/dynport/dockyard/master/dockyard
-RUN chmod 0755 /usr/local/bin/dockyard
-
-RUN dockyard install postgresql 9.2.4 postgresql-9.2-plv8 postgresql-server-dev-9.2
-
-# add postgres user
-RUN useradd postgres
 
 # add postgresql configure files
-ADD pg_hba.conf     /etc/postgresql/9.2/main/
-ADD pg_ident.conf   /etc/postgresql/9.2/main/
-ADD postgresql.conf /etc/postgresql/9.2/main/
+ADD pg_hba.conf     /etc/postgresql/9.3/main/
+ADD pg_ident.conf   /etc/postgresql/9.3/main/
+ADD postgresql.conf /etc/postgresql/9.3/main/
 
 # main entry
 ADD start /start
@@ -38,16 +33,15 @@ RUN chmod 0755 /start
 
 # restart service
 CMD ["/start"]
-RUN sudo service postgresql restart
+# RUN sudo service postgresql restart
 
 RUN psql -U postgres
 RUN createdb mydb -U postgres
 
-# install plv8
+# create plv8 extension
 RUN psql -U postgres -c "create extension plv8"
 
 # install pgrest
 RUN npm i
 RUN npm i -g pgrest
-
 
