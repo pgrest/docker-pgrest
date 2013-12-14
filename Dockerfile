@@ -11,7 +11,7 @@ ENV PASS d0cker
 
 RUN apt-get install -y curl wget
 
-RUN touch /etc/apt/sources.list.d/pgdg.list
+RUN touch /etc/apt/sources.list.d/pgdg.
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
 
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
@@ -33,15 +33,14 @@ RUN chmod 0755 /start
 
 # restart service
 CMD ["/start"]
-# RUN sudo service postgresql restart
 
-RUN psql -U postgres
+RUN service postgresql restart
+
 RUN createdb mydb -U postgres
 
 # create plv8 extension
 RUN psql -U postgres -c "create extension plv8"
 
 # install pgrest
-RUN npm i
 RUN npm i -g pgrest
 
