@@ -36,11 +36,6 @@ CMD ["/start"]
 
 RUN service postgresql restart
 
-RUN createdb mydb -U postgres
-
-# create plv8 extension
-RUN psql -U postgres -c "create extension plv8"
-
 # install pgrest
 RUN npm i -g pgrest
 
