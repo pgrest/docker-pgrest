@@ -6,7 +6,7 @@ This Dockerfile creates a container running pgrest.
 
 ## Pull docker image
 
-docker image source is now avaliable in https://index.docker.io/u/chilijung/docker-pgrest/
+docker image source is now avaliable on https://index.docker.io/u/chilijung/docker-pgrest/
 
 you can pull the image by entering the following command
 
